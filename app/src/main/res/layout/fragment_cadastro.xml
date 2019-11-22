@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.CadastroFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".Activity.LoginScreen">
+
+        <TableLayout
+            android:id="@+id/tableLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/squareborderblack"
+            android:elevation="10dp"
+            android:padding="10dp"
+            android:paddingTop="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                android:text="@string/cadastro"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                android:textStyle="bold|italic"/>
+
+            <TextView
+                android:id="@+id/nome"
+                android:text="@string/nome"
+                android:textColor="@color/colorAccent" />
+
+            <EditText
+                android:id="@+id/nometext"
+                android:hint="Seu nome e sobrenome" />
+
+            <TextView
+                android:text="@string/email"
+                android:textColor="@color/colorAccent" />
+
+            <EditText
+                android:id="@+id/emailtext"
+                android:hint="joaosousa@example.com" />
+
+            <TextView
+                android:text="@string/senha"
+                android:textColor="@color/colorAccent" />
+
+            <EditText
+                android:id="@+id/senhatext"
+                android:hint="Sua senha"
+                android:inputType="textPassword"
+                tools:layout_editor_absoluteX="10dp"
+                tools:layout_editor_absoluteY="374dp" />
+
+            <TableLayout android:id="@+id/cadastrotable">
+
+                <TextView
+                    android:text="@string/confirmasenha"
+                    android:textColor="@color/colorAccent" />
+
+                <EditText
+                    android:id="@+id/confirmatext"
+                    android:hint="Repita sua senha"
+                    android:inputType="textPassword" />
+
+            </TableLayout>
+
+
+            <Button
+                android:id="@+id/cadbtn"
+                android:layout_marginTop="20dp"
+                android:background="@android:color/black"
+                android:text="@string/cadastrar"
+                android:textColor="@color/branco" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:background="#000000"
+                app:layout_constraintBottom_toBottomOf="@+id/tableLayout2" />
+
+            <Button
+                android:id="@+id/newlogbtn"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/borderblackbutton"
+                android:text="Já possui cadastro? Clique pra entrar"
+                android:textSize="12sp" />
+        </TableLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

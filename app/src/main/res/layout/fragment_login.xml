@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.LoginFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".Activity.LoginScreen">
+
+        <TableLayout
+            android:id="@+id/tableLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/squareborderblack"
+            android:elevation="4dp"
+            android:padding="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                android:text="@string/login"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                android:textStyle="bold|italic"/>
+
+            <TextView
+                android:text="@string/email"
+                android:textColor="@android:color/black" />
+
+            <EditText
+                android:id="@+id/emaillogintext"
+                android:hint="joaosousa@example.com"
+                android:textColor="@color/colorAccent" />
+
+            <TextView
+                android:text="@string/senha"
+                android:textColor="@android:color/black" />
+
+            <EditText
+                android:id="@+id/senhalogintext"
+                android:hint="Sua senha"
+                android:inputType="textPassword"
+                android:textColor="@color/colorAccent"
+                tools:layout_editor_absoluteX="10dp"
+                tools:layout_editor_absoluteY="374dp" />
+
+
+            <Button
+                android:id="@+id/logbtn"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/black"
+                android:elevation="5dp"
+                android:text="@string/logar"
+                android:textColor="@color/branco" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:background="#000000"
+                app:layout_constraintBottom_toBottomOf="@+id/tableLayout2" />
+
+            <Button
+                android:id="@+id/newcadbtn"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/borderblackbutton"
+                android:text="Ainda não possui cadastro? Clique pra cadastrar"
+                android:textSize="12sp" />
+        </TableLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
