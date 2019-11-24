@@ -1,49 +1,34 @@
 package br.alunos.nolascopad2.fragments;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
+
+import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.ArrayList;
-
-import br.alunos.nolascopad2.Adapter.LocalBookAdapter;
 import br.alunos.nolascopad2.R;
-import br.alunos.nolascopad2.activities.LoginScreen;
-import br.alunos.nolascopad2.models.Livro;
 import br.alunos.nolascopad2.models.LivroDAO;
-import br.alunos.nolascopad2.models.User;
-import br.alunos.nolascopad2.models.UserDAO;
+import br.alunos.nolascopad2.models.Pagina;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ListLocalBooks.OnFragmentInteractionListener} interface
+ * {@link PublicPageShow.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link ListLocalBooks#newInstance} factory method to
+ * Use the {@link PublicPageShow#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ListLocalBooks extends Fragment {
+public class PublicPageShow extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private User localuser = new User();
-    private UserDAO userDAO;
-    private LivroDAO livroDAO;
-    private RecyclerView livroRecyclerView;
-    private ArrayList<Livro> livros;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -51,7 +36,7 @@ public class ListLocalBooks extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public ListLocalBooks() {
+    public PublicPageShow() {
         // Required empty public constructor
     }
 
@@ -61,11 +46,11 @@ public class ListLocalBooks extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ListLocalBooks.
+     * @return A new instance of fragment PublicPageShow.
      */
     // TODO: Rename and change types and number of parameters
-    public static ListLocalBooks newInstance(String param1, String param2) {
-        ListLocalBooks fragment = new ListLocalBooks();
+    public static PublicPageShow newInstance(String param1, String param2) {
+        PublicPageShow fragment = new PublicPageShow();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -85,33 +70,18 @@ public class ListLocalBooks extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        LivroDAO livroDAO;
+        Pagina page;
+        TextView content;
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_list_local_books, container, false);
-        FloatingActionButton newbookbtn = (FloatingActionButton)  view.findViewById(R.id.addbookfab);
-        userDAO = new UserDAO(view.getContext());
-        livroDAO = new LivroDAO(view.getContext());
-        SharedPreferences preferences = getActivity().getSharedPreferences(LoginScreen.SAVED_USER,0);
-        int loggeduser = preferences.getInt("LoggedUserId",-1);
-        livros = livroDAO.getUserLivro(loggeduser);
-        int qtlivros = livros.size();//getUserLivro(loggeduser);
-        Log.d("Teste",""+livros.size());
-        livroRecyclerView = (RecyclerView) view.findViewById(R.id.livrosRecyclerView);
-        //Layout
-        RecyclerView.LayoutManager postlayout = new LinearLayoutManager(view.getContext());
-        livroRecyclerView.setLayoutManager(postlayout);
-        //Adapter
-        LocalBookAdapter bookAdapter = new LocalBookAdapter(livros,loggeduser);
-        livroRecyclerView.setAdapter(bookAdapter);
-        newbookbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CreateBook fragment = new CreateBook();
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.listcreateframe,fragment);
-                transaction.commit();
-            }
-        });
-
+        View view = inflater.inflate(R.layout.fragment_public_page_show, container, false);
+        int currentcap = getArguments().getInt("CapId", -1);
+        livroDAO = new LivroDAO(getActivity().getApplicationContext());
+        page = livroDAO.getCapituloPag(currentcap);
+        TextView capname = (TextView) view.findViewById(R.id.pbcapname);
+        content = (TextView) view.findViewById(R.id.pbpagecontent);
+        capname.setText(livroDAO.getCapituloFromDB(currentcap).titulo);
+        content.setText(page.text);
         return view;
     }
 
@@ -125,12 +95,12 @@ public class ListLocalBooks extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        /*if (context instanceof OnFragmentInteractionListener) {
+        if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
-        }*/
+        }
     }
 
     @Override
