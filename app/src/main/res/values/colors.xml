@@ -7,4 +7,6 @@
     <color name="toolbar">#440083</color>
     <color name="brancoalfa">#F7F7F7</color>
     <color name="background">#FDF4EB</color>
+    <color name="delete">#FF5722</color>
+    <color name="edit">#03A9F4</color>
 </resources>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.EditLivro">
+
+    <!-- TODO: Update blank fragment layout -->
+    <ImageView
+        android:id="@+id/editbackbookbtn"
+        android:layout_width="35dp"
+        android:layout_height="30dp"
+        android:background="@drawable/ic_arrow_back_black_24dp" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/squareborderblack"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:text="Editar livro"
+            android:textColor="@android:color/black"
+            android:textSize="24sp"
+            android:textStyle="bold|italic" />
+
+        <TextView
+            android:layout_marginBottom="10dp"
+            android:text="Título:"
+            android:textColor="@color/colorAccent" />
+
+        <EditText
+            android:id="@+id/editbooknamefield"
+            android:layout_marginBottom="10dp"
+            android:hint="Nome do livro..."
+            android:textColor="@color/colorAccent"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_marginBottom="10dp"
+            android:text="Descrição:"
+            android:textColor="@color/colorAccent" />
+
+        <EditText
+            android:id="@+id/editdescricaosetfieldpost"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/squareborderblack"
+            android:gravity="top|left"
+            android:hint="Adicione uma descrição ao livro..."
+            android:inputType="textMultiLine"
+            android:minLines="10"
+            android:padding="10dp"
+            android:textSize="14dp" />
+
+        <CheckBox
+            android:id="@+id/editprivatecheck"
+            android:layout_marginBottom="5dp"
+            android:text="Tornar privado?" />
+
+        <Button
+            android:id="@+id/editposbtn"
+            style="?attr/buttonBarButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            android:elevation="10dp"
+            android:text="editar"
+            android:textColor="@color/branco"
+            android:textSize="18sp" />
+
+
+    </TableLayout>
+
+</FrameLayout>

@@ -1,18 +1,26 @@
 package br.alunos.nolascopad2.fragments;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import br.alunos.nolascopad2.R;
+import br.alunos.nolascopad2.activities.HomeScreen;
+import br.alunos.nolascopad2.activities.LoginScreen;
+import br.alunos.nolascopad2.models.User;
+import br.alunos.nolascopad2.models.UserDAO;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +35,7 @@ public class CadastroFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    UserDAO userDAO;
     private TextView nometext;
     private TextView emailtext;
     private TextView senhatext;
@@ -75,9 +84,10 @@ public class CadastroFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_cadastro, container, false);
+        userDAO = new UserDAO(getActivity().getApplicationContext());
         nometext = view.findViewById(R.id.nometext);
-        emailtext = view.findViewById(R.id.emailtext);
-        senhatext = view.findViewById(R.id.senhatext);
+        emailtext = view.findViewById(R.id.emailtextedit);
+        senhatext = view.findViewById(R.id.senhatextedit);
         confirmatext = view.findViewById(R.id.confirmatext);
         cadbtn = view.findViewById(R.id.cadbtn);
         lognewbtn = view.findViewById(R.id.newlogbtn);
@@ -92,7 +102,7 @@ public class CadastroFragment extends Fragment {
             }
         });
 
-        /*cadbtn.setOnClickListener(new View.OnClickListener() {
+        cadbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 User user = new User();
@@ -110,13 +120,13 @@ public class CadastroFragment extends Fragment {
                                 if(user.senha.equals(confirmasenha)){
                                     try {
                                         userDAO.saveUser(user);
-                                        SharedPreferences preferences =  getActivity().getSharedPreferences(SAVED_USER, 0);
+                                        SharedPreferences preferences =  getActivity().getSharedPreferences(LoginScreen.SAVED_USER, 0);
                                         SharedPreferences.Editor editor = preferences.edit();
                                         editor.putInt("LoggedUserId", userDAO.getUserIDFromDBbyEmail(user.email));
                                         //Toast.makeText(getActivity().getApplicationContext(),"HMMMMM2",Toast.LENGTH_LONG).show();
                                         editor.commit();
                                         Log.w("Teste","User salvo");
-                                        Intent intent = new Intent(LoginScreen.this,TimeLine.class);
+                                        Intent intent = new Intent(getActivity(), HomeScreen.class);
                                         startActivity(intent);
                                         getActivity().finish();
                                     }catch (Exception e){
@@ -128,7 +138,7 @@ public class CadastroFragment extends Fragment {
                     }else Toast.makeText(getActivity().getApplicationContext(),"Dados inválidos(Provavelmente por serem curtos demais)",Toast.LENGTH_LONG).show();
                 }
             }
-        });*/
+        });
         return view;
     }
 

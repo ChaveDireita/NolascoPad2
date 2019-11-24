@@ -25,7 +25,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/UserName"
                 android:layout_marginBottom="10dp"
                 android:gravity="center"
                 android:text="@string/cadastro"
@@ -47,7 +47,7 @@
                 android:textColor="@color/colorAccent" />
 
             <EditText
-                android:id="@+id/emailtext"
+                android:id="@+id/emailtextedit"
                 android:hint="joaosousa@example.com" />
 
             <TextView
@@ -55,7 +55,7 @@
                 android:textColor="@color/colorAccent" />
 
             <EditText
-                android:id="@+id/senhatext"
+                android:id="@+id/senhatextedit"
                 android:hint="Sua senha"
                 android:inputType="textPassword"
                 tools:layout_editor_absoluteX="10dp"

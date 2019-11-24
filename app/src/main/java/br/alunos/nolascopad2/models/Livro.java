@@ -1,6 +1,7 @@
 package br.alunos.nolascopad2.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Livro implements Serializable
 {
@@ -10,6 +11,9 @@ public class Livro implements Serializable
     public String desc;
     public int userid;
     public String lastedit;
+    public int ncaps;
+    public boolean isprivate;
+    public ArrayList<Capitulo> capitulos;
 
 
     /*public String getTitulo()

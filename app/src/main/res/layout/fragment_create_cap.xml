@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.CreateCap">
+
+    <!-- TODO: Update blank fragment layout -->
+    <ImageView
+        android:id="@+id/backcapbtn"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:background="@drawable/ic_arrow_back_black_24dp" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/squareborderblack"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:text="Novo capítulo"
+            android:textColor="@android:color/black"
+            android:textSize="24sp"
+            android:textStyle="bold|italic" />
+
+        <TextView
+            android:layout_marginBottom="10dp"
+            android:text="Título:"
+            android:textColor="@color/colorAccent" />
+
+        <EditText
+            android:id="@+id/captitlefield"
+            android:layout_marginBottom="10dp"
+            android:hint="Título do capítulo..."
+            android:textColor="@color/colorAccent"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_marginBottom="10dp"
+            android:text="Descrição:"
+            android:textColor="@color/colorAccent" />
+
+        <EditText
+            android:id="@+id/capdescfield"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/squareborderblack"
+            android:gravity="top|left"
+            android:hint="Adicione uma descrição ao caítulo..."
+            android:inputType="textMultiLine"
+            android:minLines="10"
+            android:padding="10dp"
+            android:textSize="14dp" />
+
+        <Button
+            android:id="@+id/addcapbtn"
+            style="?attr/buttonBarButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            android:elevation="10dp"
+            android:text="ADICIONAR CAPÍTULO"
+            android:textColor="@color/branco"
+            android:textSize="18sp" />
+
+
+    </TableLayout>
+
+</FrameLayout>

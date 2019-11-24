@@ -1,6 +1,8 @@
 package br.alunos.nolascopad2.fragments;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,11 +10,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import br.alunos.nolascopad2.R;
+import br.alunos.nolascopad2.activities.HomeScreen;
+import br.alunos.nolascopad2.activities.LoginScreen;
+import br.alunos.nolascopad2.models.User;
+import br.alunos.nolascopad2.models.UserDAO;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,6 +37,7 @@ public class LoginFragment extends Fragment {
     private TextView emailtext;
     private TextView senhatext;
     private Button logbtn,cadnewbtn;
+    private UserDAO userDAO;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -74,9 +82,10 @@ public class LoginFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         emailtext = view.findViewById(R.id.emaillogintext);
+        userDAO = new UserDAO(getActivity().getApplicationContext());
         senhatext = view.findViewById(R.id.senhalogintext);
         logbtn = view.findViewById(R.id.logbtn);
-        /*logbtn.setOnClickListener(new View.OnClickListener() {
+        logbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 User user = new User();
@@ -87,17 +96,17 @@ public class LoginFragment extends Fragment {
                 }else{
                     if(userDAO.searchUserByEmailAndPassword(user.email,user.senha)){
                         //int userdaoid = userDAO.getUserIDFromDBbyEmail(user.email);
-                        SharedPreferences preferences = getActivity().getSharedPreferences(SAVED_USER, 0);
+                        SharedPreferences preferences = getActivity().getSharedPreferences(LoginScreen.SAVED_USER, 0);
                         SharedPreferences.Editor editor = preferences.edit();
                         editor.putInt("LoggedUserId", userDAO.getUserIDFromDBbyEmail(user.email));
                         editor.commit();
-                        Intent intent = new Intent(getActivity(),TimeLine.class);
+                        Intent intent = new Intent(getActivity(), HomeScreen.class);
                         startActivity(intent);
                         getActivity().finish();
                     }else Toast.makeText(getActivity().getApplicationContext(),"Usuário e/ou senha incorretos >:(",Toast.LENGTH_LONG).show();
                 }
             }
-        });*/
+        });
         cadnewbtn = view.findViewById(R.id.newcadbtn);
 
         cadnewbtn.setOnClickListener(new View.OnClickListener() {

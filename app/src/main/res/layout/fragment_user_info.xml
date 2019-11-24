@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.UserInfo">
+
+    <!-- TODO: Update blank fragment layout -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".Activity.LoginScreen">
+
+        <TableLayout
+            android:id="@+id/tableLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/squareborderblack"
+            android:elevation="10dp"
+            android:padding="10dp"
+            android:paddingTop="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/username"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                android:text="João Brito"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                android:textStyle="bold|italic" />
+
+            <TextView
+                android:text="@string/email"
+                android:textColor="@color/colorAccent" />
+
+            <TextView
+                android:id="@+id/emailtextedit"
+                android:hint="joaosousa@example.com"
+                android:padding="10dp"
+                android:textSize="18sp" />
+
+            <TextView
+                android:text="Livros:"
+                android:textColor="@color/colorAccent" />
+
+            <TextView
+                android:id="@+id/totalbooks"
+                tools:layout_editor_absoluteX="10dp"
+                tools:layout_editor_absoluteY="374dp"
+                android:text="12 livros criados"
+                android:padding="10dp"
+                android:textSize="18sp" />
+
+            <TableLayout android:id="@+id/cadastrotable">
+
+                <TextView
+                    android:text="Capítulos"
+                    android:textColor="@color/colorAccent" />
+
+                <TextView
+                    android:id="@+id/totalcaps"
+                    android:text="20 capítulos criados"
+                    android:padding="10dp"
+                    android:textSize="18sp" />
+
+            </TableLayout>
+
+            <Button
+                android:id="@+id/edituserbtn"
+                android:layout_marginTop="20dp"
+                android:background="@color/colorAccent"
+                android:drawableLeft="@drawable/ic_edit_black_24dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="30dp"
+                android:text="editar informações"
+                android:textColor="@color/branco"
+                android:textSize="18sp" />
+            <Button
+                android:id="@+id/exitbtn"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/borderblackbutton"
+                android:text="@string/sair"
+                android:textSize="18sp" />
+        </TableLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
