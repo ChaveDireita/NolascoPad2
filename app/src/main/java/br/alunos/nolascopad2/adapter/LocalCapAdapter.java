@@ -1,4 +1,4 @@
-package br.alunos.nolascopad2.Adapter;
+package br.alunos.nolascopad2.adapter;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -18,12 +18,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import br.alunos.nolascopad2.R;
-import br.alunos.nolascopad2.activities.CapsScreen;
 import br.alunos.nolascopad2.activities.GeneralEditActivity;
 import br.alunos.nolascopad2.activities.PaginaShow;
 import br.alunos.nolascopad2.models.Capitulo;
-import br.alunos.nolascopad2.models.Livro;
-import br.alunos.nolascopad2.models.LivroDAO;
+import br.alunos.nolascopad2.database.LivroDAO;
 
 public class LocalCapAdapter extends RecyclerView.Adapter<LocalCapAdapter.PostViewHolder> {
     private ArrayList<Capitulo> capitulos;

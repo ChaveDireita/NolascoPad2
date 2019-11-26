@@ -40,7 +40,8 @@
 
             <EditText
                 android:id="@+id/emailtextedit"
-                android:hint="joaosousa@example.com" />
+                android:hint="joaosousa@example.com"
+                android:inputType="textEmailAddress"/>
 
             <TextView
                 android:text="@string/nome"

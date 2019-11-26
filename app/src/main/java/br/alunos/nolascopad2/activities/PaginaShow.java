@@ -8,15 +8,13 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import br.alunos.nolascopad2.R;
 import br.alunos.nolascopad2.models.Capitulo;
 import br.alunos.nolascopad2.models.Livro;
-import br.alunos.nolascopad2.models.LivroDAO;
+import br.alunos.nolascopad2.database.LivroDAO;
 import br.alunos.nolascopad2.models.Pagina;
 
 public class PaginaShow extends AppCompatActivity {

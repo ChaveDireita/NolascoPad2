@@ -22,7 +22,7 @@ import java.util.Date;
 import br.alunos.nolascopad2.R;
 import br.alunos.nolascopad2.activities.HomeScreen;
 import br.alunos.nolascopad2.models.Livro;
-import br.alunos.nolascopad2.models.LivroDAO;
+import br.alunos.nolascopad2.database.LivroDAO;
 
 /**
  * A simple {@link Fragment} subclass.

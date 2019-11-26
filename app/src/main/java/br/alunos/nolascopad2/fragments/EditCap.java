@@ -21,7 +21,7 @@ import java.util.Date;
 import br.alunos.nolascopad2.R;
 import br.alunos.nolascopad2.activities.CapsScreen;
 import br.alunos.nolascopad2.models.Capitulo;
-import br.alunos.nolascopad2.models.LivroDAO;
+import br.alunos.nolascopad2.database.LivroDAO;
 
 /**
  * A simple {@link Fragment} subclass.

@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,9 +17,9 @@ import android.widget.TextView;
 import br.alunos.nolascopad2.R;
 import br.alunos.nolascopad2.activities.GeneralEditActivity;
 import br.alunos.nolascopad2.activities.LoginScreen;
-import br.alunos.nolascopad2.models.LivroDAO;
+import br.alunos.nolascopad2.database.LivroDAO;
 import br.alunos.nolascopad2.models.User;
-import br.alunos.nolascopad2.models.UserDAO;
+import br.alunos.nolascopad2.database.UserDAO;
 
 /**
  * A simple {@link Fragment} subclass.

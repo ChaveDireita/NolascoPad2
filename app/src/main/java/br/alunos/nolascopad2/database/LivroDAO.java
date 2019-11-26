@@ -1,13 +1,16 @@
-package br.alunos.nolascopad2.models;
+package br.alunos.nolascopad2.database;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Paint;
 import android.util.Log;
 
 import java.util.ArrayList;
+
+import br.alunos.nolascopad2.models.Capitulo;
+import br.alunos.nolascopad2.models.Livro;
+import br.alunos.nolascopad2.models.Pagina;
 
 public class LivroDAO {
     private SQLiteDatabase write;
@@ -31,6 +34,19 @@ public class LivroDAO {
         write.insert(ConnectionFactory.TABELA_LIVRO,null,values);
         return true;
     }
+
+    public int saveLivroAndReturnId(Livro livro){
+        ContentValues values = new ContentValues();
+        values.put("descricao",livro.desc);
+        values.put("titulo",livro.titulo);
+        values.put("userid",livro.userid);
+        values.put("datamodificacao",livro.lastedit);
+        values.put("ncaps",0);
+        values.put("npages",0);
+        values.put("isprivate",livro.isprivate);
+        return (int) write.insert(ConnectionFactory.TABELA_LIVRO,null,values);
+    }
+
     public Livro getLivroFromDB(int livroid){
         Livro livro = new Livro();
         Cursor cursor = read.rawQuery("SELECT * FROM "+ConnectionFactory.TABELA_LIVRO+" WHERE id = "+livroid+";",null);
@@ -98,7 +114,7 @@ public class LivroDAO {
         Log.w("Teste","voltando tela tela ");
         return list;
     }
-    public boolean saveCapitulo(Capitulo cap,Pagina pagina){
+    public boolean saveCapitulo(Capitulo cap, Pagina pagina){
             ContentValues values = new ContentValues();
             values.put("descricao",cap.desc);
             values.put("livroid",cap.livroid);

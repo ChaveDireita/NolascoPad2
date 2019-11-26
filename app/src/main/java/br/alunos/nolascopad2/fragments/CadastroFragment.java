@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,16 +22,9 @@ import br.alunos.nolascopad2.R;
 import br.alunos.nolascopad2.activities.HomeScreen;
 import br.alunos.nolascopad2.activities.LoginScreen;
 import br.alunos.nolascopad2.models.User;
-import br.alunos.nolascopad2.models.UserDAO;
+import br.alunos.nolascopad2.database.UserDAO;
+import br.alunos.nolascopad2.net.UserWs;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link CadastroFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link CadastroFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class CadastroFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -52,15 +47,6 @@ public class CadastroFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CadastroFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static CadastroFragment newInstance(String param1, String param2) {
         CadastroFragment fragment = new CadastroFragment();
         Bundle args = new Bundle();
@@ -119,17 +105,19 @@ public class CadastroFragment extends Fragment {
                             if(!userDAO.searchUserByEmail(user.email)){
                                 if(user.senha.equals(confirmasenha)){
                                     try {
+                                        new CadastroTask().execute(user);
                                         userDAO.saveUser(user);
                                         SharedPreferences preferences =  getActivity().getSharedPreferences(LoginScreen.SAVED_USER, 0);
                                         SharedPreferences.Editor editor = preferences.edit();
+
                                         editor.putInt("LoggedUserId", userDAO.getUserIDFromDBbyEmail(user.email));
-                                        //Toast.makeText(getActivity().getApplicationContext(),"HMMMMM2",Toast.LENGTH_LONG).show();
                                         editor.commit();
                                         Log.w("Teste","User salvo");
                                         Intent intent = new Intent(getActivity(), HomeScreen.class);
                                         startActivity(intent);
                                         getActivity().finish();
                                     }catch (Exception e){
+                                        e.printStackTrace();
                                         Toast.makeText(getActivity().getApplicationContext(),"Não foi possivel efetuar o cadastro, veja o que deu errado aí, mas também pode ter sido erro nosso, então desculpa se for :)",Toast.LENGTH_LONG).show();
                                     }
                                 } else Toast.makeText(getActivity().getApplicationContext(),"Senhas não batem",Toast.LENGTH_LONG).show();
@@ -142,7 +130,6 @@ public class CadastroFragment extends Fragment {
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -166,18 +153,25 @@ public class CadastroFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
+    public interface OnFragmentInteractionListener
+    {
         void onFragmentInteraction(Uri uri);
     }
+
+    public class CadastroTask extends AsyncTask<User, Void, Void>
+    {
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(User... users)
+        {
+            UserWs.post(users[0]);
+            return null;
+        }
+    }
+
 }

@@ -1,7 +1,6 @@
 package br.alunos.nolascopad2.fragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -11,20 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import br.alunos.nolascopad2.R;
-import br.alunos.nolascopad2.activities.HomeScreen;
-import br.alunos.nolascopad2.models.Livro;
-import br.alunos.nolascopad2.models.LivroDAO;
 import br.alunos.nolascopad2.models.User;
-import br.alunos.nolascopad2.models.UserDAO;
+import br.alunos.nolascopad2.database.UserDAO;
 
 /**
  * A simple {@link Fragment} subclass.

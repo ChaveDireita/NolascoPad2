@@ -13,49 +13,4 @@ public class Livro implements Serializable
     public String lastedit;
     public int ncaps;
     public boolean isprivate;
-    public ArrayList<Capitulo> capitulos;
-
-
-    /*public String getTitulo()
-    {
-        return titulo;
-    }
-
-    public void setTitulo(String titulo)
-    {
-        this.titulo = titulo;
-    }
-
-    public Capitulo getCapitulo (int capitulo) throws ArrayIndexOutOfBoundsException
-    {
-        return capitulos.get(capitulo);
-    }
-
-    public Livro(String titulo)
-    {
-        this.titulo = titulo;
-        this.capitulos = new ArrayList<Capitulo>();
-    }
-
-    public int adicionarCapitulo (String titulo)
-    {
-        capitulos.add(new Capitulo (titulo));
-        return capitulos.size() - 1;
-    }
-
-    public void removerCapitulo (int capitulo) throws ArrayIndexOutOfBoundsException
-    {
-        capitulos.remove(capitulo);
-    }
-
-    public ArrayList<Capitulo> getCapitulos()
-    {
-        return capitulos;
-    }
-
-    @Override
-    public String toString ()
-    {
-        return this.titulo;
-    }*/
 }

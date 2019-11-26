@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,30 +19,18 @@ import androidx.fragment.app.FragmentTransaction;
 import br.alunos.nolascopad2.R;
 import br.alunos.nolascopad2.activities.HomeScreen;
 import br.alunos.nolascopad2.activities.LoginScreen;
+import br.alunos.nolascopad2.database.LivroDAO;
+import br.alunos.nolascopad2.models.Livro;
 import br.alunos.nolascopad2.models.User;
-import br.alunos.nolascopad2.models.UserDAO;
+import br.alunos.nolascopad2.database.UserDAO;
+import br.alunos.nolascopad2.net.UserWs;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link LoginFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link LoginFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class LoginFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
     private TextView emailtext;
     private TextView senhatext;
-    private Button logbtn,cadnewbtn;
+    private Button logbtn,
+                   cadnewbtn;
     private UserDAO userDAO;
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
@@ -49,20 +38,9 @@ public class LoginFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment LoginFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static LoginFragment newInstance(String param1, String param2) {
         LoginFragment fragment = new LoginFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -70,10 +48,6 @@ public class LoginFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -91,7 +65,7 @@ public class LoginFragment extends Fragment {
                 User user = new User();
                 user.email = emailtext.getText().toString();
                 user.senha = senhatext.getText().toString();
-                if(user.email==""||user.senha==""){
+                if(user.email.equalsIgnoreCase("")||user.senha.equalsIgnoreCase("")){
                     Toast.makeText(getActivity().getApplicationContext(),"Campos foram deixados em branco",Toast.LENGTH_LONG).show();
                 }else{
                     if(userDAO.searchUserByEmailAndPassword(user.email,user.senha)){
@@ -103,7 +77,7 @@ public class LoginFragment extends Fragment {
                         Intent intent = new Intent(getActivity(), HomeScreen.class);
                         startActivity(intent);
                         getActivity().finish();
-                    }else Toast.makeText(getActivity().getApplicationContext(),"Usuário e/ou senha incorretos >:(",Toast.LENGTH_LONG).show();
+                    } else Toast.makeText(getActivity().getApplicationContext(),"Usuário e/ou senha incorretos >:(",Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -121,7 +95,6 @@ public class LoginFragment extends Fragment {
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -145,18 +118,27 @@ public class LoginFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
+    public interface OnFragmentInteractionListener
+    {
         void onFragmentInteraction(Uri uri);
     }
+
+    public class LivroTask extends AsyncTask<Integer, Void, Void>
+    {
+
+        @Override
+        protected Void doInBackground(Integer... ints)
+        {
+            LivroDAO dao = new LivroDAO(getActivity());
+            int count = dao.getUserLivro(ints[0]).size();
+
+            if (count == 0)
+            {
+
+            }
+
+            return null;
+        }
+    }
+
 }

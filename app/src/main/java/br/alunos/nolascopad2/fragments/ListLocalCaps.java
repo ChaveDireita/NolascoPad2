@@ -12,19 +12,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-import br.alunos.nolascopad2.Adapter.LocalBookAdapter;
-import br.alunos.nolascopad2.Adapter.LocalCapAdapter;
+import br.alunos.nolascopad2.adapter.LocalCapAdapter;
 import br.alunos.nolascopad2.R;
 import br.alunos.nolascopad2.models.Capitulo;
 import br.alunos.nolascopad2.models.Livro;
-import br.alunos.nolascopad2.models.LivroDAO;
+import br.alunos.nolascopad2.database.LivroDAO;
 
 /**
  * A simple {@link Fragment} subclass.

@@ -1,4 +1,4 @@
-package br.alunos.nolascopad2.models;
+package br.alunos.nolascopad2.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -62,9 +62,11 @@ public class ConnectionFactory extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        try{
+        try
+        {
             Log.w("Teste","Todas as tabelas foram criadas com sucesso");
-        }catch(Exception e){
+        }catch(Exception e)
+        {
 
         }
     }

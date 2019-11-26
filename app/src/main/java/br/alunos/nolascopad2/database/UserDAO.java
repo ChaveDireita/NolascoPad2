@@ -1,4 +1,4 @@
-package br.alunos.nolascopad2.models;
+package br.alunos.nolascopad2.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
+
+import br.alunos.nolascopad2.database.ConnectionFactory;
+import br.alunos.nolascopad2.models.User;
 
 public class UserDAO {
 

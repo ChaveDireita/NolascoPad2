@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,17 +14,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.getbase.floatingactionbutton.FloatingActionButton;
-
 import java.util.ArrayList;
 
-import br.alunos.nolascopad2.Adapter.LocalBookAdapter;
-import br.alunos.nolascopad2.Adapter.PublicBookAdapter;
+import br.alunos.nolascopad2.adapter.PublicBookAdapter;
 import br.alunos.nolascopad2.R;
 import br.alunos.nolascopad2.activities.LoginScreen;
 import br.alunos.nolascopad2.models.Livro;
-import br.alunos.nolascopad2.models.LivroDAO;
-import br.alunos.nolascopad2.models.UserDAO;
+import br.alunos.nolascopad2.database.LivroDAO;
 
 /**
  * A simple {@link Fragment} subclass.

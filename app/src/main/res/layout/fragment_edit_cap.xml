@@ -38,7 +38,8 @@
             android:layout_marginBottom="10dp"
             android:hint="Título do capítulo..."
             android:textColor="@color/colorAccent"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:inputType="textShortMessage"/>
 
         <TextView
             android:layout_marginBottom="10dp"

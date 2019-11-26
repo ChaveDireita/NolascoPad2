@@ -3,6 +3,7 @@ package br.alunos.nolascopad2.fragments;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,28 +18,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import br.alunos.nolascopad2.Adapter.LocalBookAdapter;
+import br.alunos.nolascopad2.adapter.LocalBookAdapter;
 import br.alunos.nolascopad2.R;
 import br.alunos.nolascopad2.activities.LoginScreen;
+import br.alunos.nolascopad2.models.Capitulo;
 import br.alunos.nolascopad2.models.Livro;
-import br.alunos.nolascopad2.models.LivroDAO;
+import br.alunos.nolascopad2.database.LivroDAO;
+import br.alunos.nolascopad2.models.Pagina;
 import br.alunos.nolascopad2.models.User;
-import br.alunos.nolascopad2.models.UserDAO;
+import br.alunos.nolascopad2.database.UserDAO;
+import br.alunos.nolascopad2.net.LivroWs;
+import br.alunos.nolascopad2.net.model.CapituloNet;
+import br.alunos.nolascopad2.net.model.LivroNet;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link ListLocalBooks.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link ListLocalBooks#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ListLocalBooks extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
     private User localuser = new User();
     private UserDAO userDAO;
     private LivroDAO livroDAO;
@@ -46,8 +43,6 @@ public class ListLocalBooks extends Fragment {
     private ArrayList<Livro> livros;
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
@@ -55,20 +50,9 @@ public class ListLocalBooks extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ListLocalBooks.
-     */
-    // TODO: Rename and change types and number of parameters
     public static ListLocalBooks newInstance(String param1, String param2) {
         ListLocalBooks fragment = new ListLocalBooks();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -76,10 +60,6 @@ public class ListLocalBooks extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -93,7 +73,7 @@ public class ListLocalBooks extends Fragment {
         SharedPreferences preferences = getActivity().getSharedPreferences(LoginScreen.SAVED_USER,0);
         int loggeduser = preferences.getInt("LoggedUserId",-1);
         livros = livroDAO.getUserLivro(loggeduser);
-        int qtlivros = livros.size();//getUserLivro(loggeduser);
+        int qtlivros = livros.size();
         Log.d("Teste",""+livros.size());
         livroRecyclerView = (RecyclerView) view.findViewById(R.id.livrosRecyclerView);
         //Layout
@@ -125,12 +105,6 @@ public class ListLocalBooks extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        /*if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }*/
     }
 
     @Override
@@ -139,18 +113,48 @@ public class ListLocalBooks extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    public class LivroTask extends AsyncTask<Integer, Void, Void>
+    {
+
+        @Override
+        protected Void doInBackground(Integer... integers)
+        {
+            UserDAO userDAO = new UserDAO(getActivity());
+            LivroDAO livroDAO = new LivroDAO(getActivity());
+            int userid = integers[0];
+
+            if (livroDAO.getUserLivro(userid).size() > 0)
+                return null;
+
+            String email = userDAO.getUserFromDB(userid).email;
+
+            List<LivroNet> livroNets = LivroWs.getLivrosUser(email);
+
+            for (LivroNet l : livroNets)
+            {
+                Livro livro = l.toLivro();
+                livro.userid = userid;
+                int livroId = livroDAO.saveLivroAndReturnId(livro);
+                for (CapituloNet c: l.capitulos) {
+                    Capitulo capitulo = new Capitulo();
+                    Pagina pagina = new Pagina();
+
+                    capitulo.titulo = c.titulo;
+                    capitulo.npages = c.npages;
+                    capitulo.lastedit = c.lastedit;
+                    capitulo.desc = c.desc;
+                    capitulo.livroid = livroId;
+                    pagina.text = c.pagina;
+                    livroDAO.saveCapitulo(capitulo, pagina);
+                }
+            }
+
+            return null;
+        }
     }
 }

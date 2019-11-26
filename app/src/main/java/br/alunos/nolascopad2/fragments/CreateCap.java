@@ -1,7 +1,6 @@
 package br.alunos.nolascopad2.fragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -12,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -21,9 +19,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import br.alunos.nolascopad2.R;
-import br.alunos.nolascopad2.activities.CapsScreen;
 import br.alunos.nolascopad2.models.Capitulo;
-import br.alunos.nolascopad2.models.LivroDAO;
+import br.alunos.nolascopad2.database.LivroDAO;
 import br.alunos.nolascopad2.models.Pagina;
 
 /**

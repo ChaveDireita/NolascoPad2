@@ -40,7 +40,8 @@
 
             <EditText
                 android:id="@+id/nometext"
-                android:hint="Seu nome e sobrenome" />
+                android:hint="Seu nome e sobrenome"
+                android:inputType="textPersonName"/>
 
             <TextView
                 android:text="@string/email"
@@ -48,7 +49,8 @@
 
             <EditText
                 android:id="@+id/emailtextedit"
-                android:hint="joaosousa@example.com" />
+                android:hint="joaosousa@example.com"
+                android:inputType="textEmailAddress"/>
 
             <TextView
                 android:text="@string/senha"

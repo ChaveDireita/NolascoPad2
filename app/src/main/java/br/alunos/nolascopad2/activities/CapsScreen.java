@@ -5,12 +5,9 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.appcompat.widget.Toolbar;
 
 import br.alunos.nolascopad2.R;
-import br.alunos.nolascopad2.fragments.ListLocalBooks;
 import br.alunos.nolascopad2.fragments.ListLocalCaps;
-import br.alunos.nolascopad2.models.LivroDAO;
 
 public class CapsScreen extends AppCompatActivity {
     public int bookid;

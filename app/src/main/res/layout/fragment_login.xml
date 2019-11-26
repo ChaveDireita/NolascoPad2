@@ -40,7 +40,8 @@
             <EditText
                 android:id="@+id/emaillogintext"
                 android:hint="joaosousa@example.com"
-                android:textColor="@color/colorAccent" />
+                android:textColor="@color/colorAccent"
+                android:inputType="textEmailAddress"/>
 
             <TextView
                 android:text="@string/senha"
@@ -52,7 +53,8 @@
                 android:inputType="textPassword"
                 android:textColor="@color/colorAccent"
                 tools:layout_editor_absoluteX="10dp"
-                tools:layout_editor_absoluteY="374dp" />
+                tools:layout_editor_absoluteY="374dp"
+                />
 
 
             <Button

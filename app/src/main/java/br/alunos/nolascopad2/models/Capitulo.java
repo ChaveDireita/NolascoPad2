@@ -11,5 +11,4 @@ public class Capitulo implements Serializable
     public int livroid;
     public int npages;
     public String lastedit;
-    public ArrayList<Pagina> paginas;
 }
