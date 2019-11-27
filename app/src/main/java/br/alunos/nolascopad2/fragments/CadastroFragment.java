@@ -136,6 +136,8 @@ public class CadastroFragment extends Fragment {
         }
     }
 
+
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -146,6 +148,8 @@ public class CadastroFragment extends Fragment {
                     + " must implement OnFragmentInteractionListener");
         }*/
     }
+
+
 
     @Override
     public void onDetach() {
