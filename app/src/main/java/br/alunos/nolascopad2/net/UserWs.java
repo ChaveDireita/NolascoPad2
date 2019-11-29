@@ -2,6 +2,8 @@ package br.alunos.nolascopad2.net;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,6 +18,7 @@ import br.alunos.nolascopad2.models.User;
 
 public class UserWs
 {
+    @NonNull
     public static String post (User user)
     {
         try
@@ -49,4 +52,32 @@ public class UserWs
         return users;
     }
 
+    public static User get (String user)
+    {
+        User u = null;
+        try
+        {
+            u = JsonConverter.userFromJson(new JSONObject
+                    (
+                            getResponseData(getFrom("nolascopad/user/email"))
+                    ));
+        } catch (IOException | JSONException e)
+        {
+            e.printStackTrace();
+        }
+
+        return u;
+    }
+
+    public static boolean auth(String email, String senha)
+    {
+        try
+        {
+            getResponseData(getFrom("/nolascopad/auth"));
+        } catch (IOException ignored)
+        {
+            return false;
+        }
+        return true;
+    }
 }

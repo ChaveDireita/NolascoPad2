@@ -34,20 +34,15 @@ import br.alunos.nolascopad2.net.model.CapituloNet;
 import br.alunos.nolascopad2.net.model.LivroNet;
 
 public class ListLocalBooks extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private User localuser = new User();
     private UserDAO userDAO;
     private LivroDAO livroDAO;
     private RecyclerView livroRecyclerView;
     private ArrayList<Livro> livros;
 
-    // TODO: Rename and change types of parameters
-
     private OnFragmentInteractionListener mListener;
 
-    public ListLocalBooks() {
-        // Required empty public constructor
+    public ListLocalBooks()
+    {
     }
 
     public static ListLocalBooks newInstance(String param1, String param2) {
@@ -65,37 +60,39 @@ public class ListLocalBooks extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_list_local_books, container, false);
         FloatingActionButton newbookbtn = (FloatingActionButton)  view.findViewById(R.id.addbookfab);
         userDAO = new UserDAO(view.getContext());
         livroDAO = new LivroDAO(view.getContext());
+
+
         SharedPreferences preferences = getActivity().getSharedPreferences(LoginScreen.SAVED_USER,0);
-        int loggeduser = preferences.getInt("LoggedUserId",-1);
-        livros = livroDAO.getUserLivro(loggeduser);
-        int qtlivros = livros.size();
-        Log.d("Teste",""+livros.size());
-        livroRecyclerView = (RecyclerView) view.findViewById(R.id.livrosRecyclerView);
+        String loggeduser = preferences.getString("LoggedUserEmail", null);
+
+        int userid = userDAO.getUserIDFromDBbyEmail(loggeduser);
+
+        livros = livroDAO.getUserLivro(userid);
+
+        livroRecyclerView = view.findViewById(R.id.livrosRecyclerView);
+
         //Layout
         RecyclerView.LayoutManager postlayout = new LinearLayoutManager(view.getContext());
         livroRecyclerView.setLayoutManager(postlayout);
+
         //Adapter
-        LocalBookAdapter bookAdapter = new LocalBookAdapter(livros,loggeduser);
+        LocalBookAdapter bookAdapter = new LocalBookAdapter(livros,userid);
         livroRecyclerView.setAdapter(bookAdapter);
-        newbookbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CreateBook fragment = new CreateBook();
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.listcreateframe,fragment);
-                transaction.commit();
-            }
+
+        newbookbtn.setOnClickListener(v -> {
+            CreateBook fragment = new CreateBook();
+            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.listcreateframe,fragment);
+            transaction.commit();
         });
 
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -114,24 +111,23 @@ public class ListLocalBooks extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 
-    public class LivroTask extends AsyncTask<Integer, Void, Void>
+    public class LivroTask extends AsyncTask<String, Void, Void>
     {
 
         @Override
-        protected Void doInBackground(Integer... integers)
+        protected Void doInBackground(String... strings)
         {
             UserDAO userDAO = new UserDAO(getActivity());
             LivroDAO livroDAO = new LivroDAO(getActivity());
-            int userid = integers[0];
+            String email  = strings[0];
+
+            int userid = userDAO.getUserIDFromDBbyEmail(email);
 
             if (livroDAO.getUserLivro(userid).size() > 0)
                 return null;
-
-            String email = userDAO.getUserFromDB(userid).email;
 
             List<LivroNet> livroNets = LivroWs.getLivrosUser(email);
 

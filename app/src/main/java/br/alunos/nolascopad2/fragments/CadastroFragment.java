@@ -161,15 +161,21 @@ public class CadastroFragment extends Fragment {
                         .show(getFragmentManager(), "Info");
                 return null;
             }
-            UserWs.post(user);
+            String res = UserWs.post(user);
+            if (!res.equalsIgnoreCase("created"))
+            {
+                InformationDialogFragment.newInstance("Erro", "Esse email já está cadastrado", "Ok")
+                        .show(getFragmentManager(), "Info");
+                return null;
+            }
 
-//            userDAO.saveUser(user);
+
+            userDAO.saveUser(user);
             SharedPreferences preferences =  getActivity().getSharedPreferences(LoginScreen.SAVED_USER, 0);
             SharedPreferences.Editor editor = preferences.edit();
 
             editor.putString("LoggedUserEmail", user.email);
             editor.apply();
-//            Log.w("Teste","User salvo");
             Intent intent = new Intent(getActivity(), HomeScreen.class);
             startActivity(intent);
             getActivity().finish();

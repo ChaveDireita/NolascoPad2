@@ -21,8 +21,6 @@ public class SplashScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        new CarregarUsuariosTask().execute();
-
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -30,31 +28,5 @@ public class SplashScreen extends AppCompatActivity {
                 finish();
             }
         }, 2000);
-    }
-
-    public void feedDatabase (List<User> users)
-    {
-        UserDAO dao = new UserDAO(this);
-        for (User u : users)
-            if (!dao.searchUserByEmail(u.email))
-                dao.saveUser(u);
-
-    }
-
-    public class CarregarUsuariosTask extends AsyncTask<Void, Void, List<User>>
-    {
-
-        @Override
-        protected List<User> doInBackground(Void... voids)
-        {
-            return UserWs.getAll();
-        }
-
-        @Override
-        protected void onPostExecute(List<User> users)
-        {
-            feedDatabase(users);
-            super.onPostExecute(users);
-        }
     }
 }

@@ -24,6 +24,7 @@ import br.alunos.nolascopad2.models.Livro;
 import br.alunos.nolascopad2.models.User;
 import br.alunos.nolascopad2.database.UserDAO;
 import br.alunos.nolascopad2.net.UserWs;
+import br.alunos.nolascopad2.net.WsConnector;
 
 public class LoginFragment extends Fragment {
     private TextView emailtext;
@@ -53,44 +54,30 @@ public class LoginFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         emailtext = view.findViewById(R.id.emaillogintext);
         userDAO = new UserDAO(getActivity().getApplicationContext());
         senhatext = view.findViewById(R.id.senhalogintext);
         logbtn = view.findViewById(R.id.logbtn);
-        logbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                User user = new User();
-                user.email = emailtext.getText().toString();
-                user.senha = senhatext.getText().toString();
-                if(user.email.equalsIgnoreCase("")||user.senha.equalsIgnoreCase("")){
-                    Toast.makeText(getActivity().getApplicationContext(),"Campos foram deixados em branco",Toast.LENGTH_LONG).show();
-                }else{
-                    if(userDAO.searchUserByEmailAndPassword(user.email,user.senha)){
-                        //int userdaoid = userDAO.getUserIDFromDBbyEmail(user.email);
-                        SharedPreferences preferences = getActivity().getSharedPreferences(LoginScreen.SAVED_USER, 0);
-                        SharedPreferences.Editor editor = preferences.edit();
-                        editor.putInt("LoggedUserId", userDAO.getUserIDFromDBbyEmail(user.email));
-                        editor.commit();
-                        Intent intent = new Intent(getActivity(), HomeScreen.class);
-                        startActivity(intent);
-                        getActivity().finish();
-                    } else Toast.makeText(getActivity().getApplicationContext(),"Usuário e/ou senha incorretos >:(",Toast.LENGTH_LONG).show();
-                }
+        logbtn.setOnClickListener(v -> {
+            User user = new User();
+            user.email = emailtext.getText().toString();
+            user.senha = senhatext.getText().toString();
+            if(user.email.equalsIgnoreCase("")||user.senha.equalsIgnoreCase(""))
+            {
+                InformationDialogFragment.newInstance("Erro", "Usuário ou senha em brancos.", "Ok")
+                        .show(getFragmentManager(), "Info");
+                return;
             }
+            new LoginTask().execute(user.email, user.senha);
         });
         cadnewbtn = view.findViewById(R.id.newcadbtn);
 
-        cadnewbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CadastroFragment fragment = new CadastroFragment();
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.framelog,fragment);
-                transaction.commit();
-            }
+        cadnewbtn.setOnClickListener(v -> {
+            CadastroFragment fragment = new CadastroFragment();
+            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.framelog,fragment);
+            transaction.commit();
         });
         return view;
     }
@@ -102,18 +89,14 @@ public class LoginFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(Context context)
+    {
         super.onAttach(context);
-        /*if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }*/
     }
 
     @Override
-    public void onDetach() {
+    public void onDetach()
+    {
         super.onDetach();
         mListener = null;
     }
@@ -123,19 +106,39 @@ public class LoginFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    public class LivroTask extends AsyncTask<Integer, Void, Void>
+    public class LoginTask extends AsyncTask<String, Void, Void>
     {
 
         @Override
-        protected Void doInBackground(Integer... ints)
-        {
-            LivroDAO dao = new LivroDAO(getActivity());
-            int count = dao.getUserLivro(ints[0]).size();
+        protected Void doInBackground(String... strings) {
+            String email = strings[0];
+            String senha = strings[1];
 
-            if (count == 0)
+            if (!WsConnector.checkInternetConection())
             {
-
+                InformationDialogFragment.newInstance("Erro", "Não foi possível conectar-se ao servidor.", "Ok")
+                        .show(getFragmentManager(), "Info");
+                return null;
             }
+
+            if (!UserWs.auth(email, senha))
+            {
+                InformationDialogFragment.newInstance("Erro", "Email ou senha incorretos.", "Ok")
+                        .show(getFragmentManager(), "Info");
+                return null;
+            }
+
+            new UserDAO(getActivity()).saveUser(UserWs.get(email));
+
+            SharedPreferences preferences =  getActivity().getSharedPreferences(LoginScreen.SAVED_USER, 0);
+            SharedPreferences.Editor editor = preferences.edit();
+
+            editor.putString("LoggedUserEmail", email);
+            editor.apply();
+
+            Intent intent = new Intent(getActivity(), HomeScreen.class);
+            startActivity(intent);
+            getActivity().finish();
 
             return null;
         }
