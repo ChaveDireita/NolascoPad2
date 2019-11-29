@@ -11,6 +11,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.InetAddress;
 import java.net.URL;
 import java.util.Scanner;
 
@@ -94,6 +95,17 @@ public class WsConnector
         con.connect();
 
         return con;
+    }
+
+    public static boolean checkInternetConection() {
+        try {
+            InetAddress ipAddr = InetAddress.getByName(BASE_SERVER);
+
+            return !ipAddr.equals("");
+
+        } catch (Exception e) {
+            return false;
+        }
     }
 
 }

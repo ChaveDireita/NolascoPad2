@@ -1,12 +1,18 @@
 package br.alunos.nolascopad2.fragments;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 public class InformationDialogFragment extends DialogFragment
 {
-    public String title;
-    public String message;
-    public String button;
+    private String title;
+    private String message;
+    private String button;
 
     public InformationDialogFragment()
     {
@@ -23,5 +29,13 @@ public class InformationDialogFragment extends DialogFragment
         return fragment;
     }
 
-
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState)
+    {
+        return new AlertDialog.Builder(getActivity()).setTitle(title)
+                                                     .setMessage(message)
+                                                     .setPositiveButton(button, (v, i) -> {})
+                                                     .create();
+    }
 }
