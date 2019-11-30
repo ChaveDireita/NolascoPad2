@@ -9,4 +9,9 @@
     <color name="background">#FDF4EB</color>
     <color name="delete">#FF5722</color>
     <color name="edit">#03A9F4</color>
+
+
+    <color name="fab_normal">#202020</color>
+    <color name="fab_pressed">#606060</color>
+
 </resources>

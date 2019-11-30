@@ -46,23 +46,30 @@
             android:layout_margin="25dp"
             android:layout_marginEnd="120dp"
             android:layout_marginBottom="32dp"
+            app:fab_addButtonColorNormal="@color/fab_normal"
+            app:fab_addButtonColorPressed="@color/fab_pressed"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/ic_add_black_24dp" >
+            app:layout_constraintEnd_toEndOf="parent" >
 
             <com.getbase.floatingactionbutton.FloatingActionButton
                 android:id="@+id/cloudfab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_add_black_24dp"
+                app:fab_colorNormal="@color/fab_normal"
+                app:fab_colorPressed="@color/fab_pressed"
+                android:src="@drawable/ic_cloud_upload_black_24dp"
+                app:rippleColor="@color/fab_pressed"
                 app:fab_title="@string/fab_cloud"/>
 
             <com.getbase.floatingactionbutton.FloatingActionButton
                 android:id="@+id/addbookfab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:fab_title="@string/fab_add"
-                app:srcCompat="@drawable/ic_add_black_24dp" />
+                app:rippleColor="@color/fab_pressed"
+                app:fab_colorNormal="@color/fab_normal"
+                app:fab_colorPressed="@color/fab_pressed"
+                android:src="@drawable/ic_add_black_24dp"
+                app:fab_title="@string/fab_add" />
 
         </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
@@ -70,7 +77,6 @@
             android:id="@+id/nullmessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nenhum livro criado até o momento"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@+id/livrosRecyclerView"
             app:layout_constraintEnd_toEndOf="parent"

@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import br.alunos.nolascopad2.adapter.PublicBookAdapter;
 import br.alunos.nolascopad2.R;
 import br.alunos.nolascopad2.activities.LoginScreen;
+import br.alunos.nolascopad2.database.UserDAO;
 import br.alunos.nolascopad2.models.Livro;
 import br.alunos.nolascopad2.database.LivroDAO;
 
@@ -42,19 +43,10 @@ public class ListPublicBooks extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public ListPublicBooks() {
-        // Required empty public constructor
+    public ListPublicBooks()
+    {
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ListPublicBooks.
-     */
-    // TODO: Rename and change types and number of parameters
     public static ListPublicBooks newInstance(String param1, String param2) {
         ListPublicBooks fragment = new ListPublicBooks();
         Bundle args = new Bundle();
@@ -80,9 +72,8 @@ public class ListPublicBooks extends Fragment {
         View view = inflater.inflate(R.layout.fragment_list_public_books, container, false);
         LivroDAO livroDAO = new LivroDAO(view.getContext());
         SharedPreferences preferences = getActivity().getSharedPreferences(LoginScreen.SAVED_USER,0);
-        int loggeduser = preferences.getInt("LoggedUserId",-1);
+        int loggeduser = new UserDAO(getActivity()).getUserIDFromDBbyEmail(preferences.getString("LoggedUserEmail",null));
         ArrayList<Livro> livros = livroDAO.getAllPublicBooks();
-        int qtlivros = livros.size();
         Log.d("Teste",""+livros.size());
         RecyclerView livroRecyclerView = (RecyclerView) view.findViewById(R.id.pblivrosRecyclerView);
         //Layout
@@ -94,7 +85,6 @@ public class ListPublicBooks extends Fragment {
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -118,16 +108,6 @@ public class ListPublicBooks extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);

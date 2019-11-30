@@ -21,4 +21,6 @@
     <string name="navigation_bar_open">Abriu fodase</string>
     <string name="navigation_bar_close">Fechou fodase</string>
 
+    <string name="book_put_success">Upload dos livros foi bem sucedido</string>
+
 </resources>

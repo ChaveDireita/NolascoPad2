@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +45,7 @@ public class ListLocalBooks extends Fragment {
 
     private LocalBookAdapter bookAdapter;
 
-    private String loggeduser;
+    public String loggeduser;
 
     private OnFragmentInteractionListener mListener;
 
@@ -70,6 +71,7 @@ public class ListLocalBooks extends Fragment {
     {
         View view = inflater.inflate(R.layout.fragment_list_local_books, container, false);
         FloatingActionButton newbookbtn = view.findViewById(R.id.addbookfab);
+        FloatingActionButton cloudbtn = view.findViewById(R.id.cloudfab);
 
         userDAO = new UserDAO(view.getContext());
         livroDAO = new LivroDAO(view.getContext());
@@ -98,6 +100,8 @@ public class ListLocalBooks extends Fragment {
             transaction.replace(R.id.listcreateframe,fragment);
             transaction.commit();
         });
+
+        cloudbtn.setOnClickListener(v -> new PutLivroTask().execute());
 
         return view;
     }
@@ -191,6 +195,61 @@ public class ListLocalBooks extends Fragment {
             bookAdapter.livros = livros;
             bookAdapter.notifyDataSetChanged();
             super.onPostExecute(livros);
+        }
+    }
+
+    public class PutLivroTask extends AsyncTask<Void, Void, Boolean>
+    {
+        @Override
+        protected Boolean doInBackground(Void... voids)
+        {
+            if (!WsConnector.checkInternetConection())
+            {
+                InformationDialogFragment.newInstance("Erro", "Não foi possível conectar-se ao servidor.", "Ok")
+                        .show(getFragmentManager(), "Info");
+                return false;
+            }
+
+            LivroDAO livroDAO = new LivroDAO(getActivity());
+            UserDAO userDAO = new UserDAO(getActivity());
+
+            List<Livro> livros = livroDAO.getUserLivro(userDAO.getUserIDFromDBbyEmail(loggeduser));
+
+            List<LivroNet> livroNets = new ArrayList<>();
+
+            for (Livro l : livros)
+            {
+                LivroNet livroNet = LivroNet.fromLivro(l);
+                livroNet.user = loggeduser;
+
+                for (Capitulo c : livroDAO.getLivroCaps(l.id))
+                {
+                    CapituloNet capituloNet = CapituloNet.fromCapitulo(c, livroDAO.getCapituloPag(c.id));
+                    livroNet.capitulos.add(capituloNet);
+                }
+
+                livroNets.add(livroNet);
+            }
+
+            if (!LivroWs.putLivros(loggeduser, livroNets).equalsIgnoreCase("Ok"))
+            {
+                InformationDialogFragment.newInstance("Erro", "Ocorreu um erro ao fazer o upload dos livros.", "Ok")
+                        .show(getFragmentManager(), "Info");
+                return false;
+            }
+
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean deuCerto)
+        {
+            if (deuCerto)
+            {
+                Snackbar.make(getView(), R.string.book_put_success, Snackbar.LENGTH_SHORT)
+                        .show();
+            }
+            super.onPostExecute(deuCerto);
         }
     }
 }

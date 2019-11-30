@@ -5,7 +5,6 @@ import java.util.List;
 
 import br.alunos.nolascopad2.models.Livro;
 
-
 public class LivroNet
 {
     public String titulo;
@@ -15,6 +14,7 @@ public class LivroNet
     public String lastedit;
     public int ncaps;
     public boolean isprivate;
+
     public List<CapituloNet> capitulos = new ArrayList<>();
 
     public Livro toLivro()
@@ -27,6 +27,20 @@ public class LivroNet
         livro.npages = npages;
         livro.ncaps = ncaps;
         return livro;
+    }
+
+    public static LivroNet fromLivro (Livro livro)
+    {
+        LivroNet livroNet = new LivroNet();
+
+        livroNet.titulo = livro.titulo;
+        livroNet.desc = livro.desc;
+        livroNet.isprivate = livro.isprivate;
+        livroNet.ncaps = livro.ncaps;
+        livroNet.lastedit = livro.lastedit;
+        livroNet.npages = livro.npages;
+
+        return livroNet;
     }
 
 }
