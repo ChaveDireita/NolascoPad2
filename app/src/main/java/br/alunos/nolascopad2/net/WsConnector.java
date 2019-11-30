@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
@@ -72,7 +73,7 @@ public class WsConnector
     }
 
 
-    public static HttpURLConnection put (String route, JSONObject data) throws IOException
+    public static HttpURLConnection put (String route, JSONArray data) throws IOException
     {
         HttpURLConnection con = connectTo(route);
         con.setRequestMethod("PUT");
@@ -84,9 +85,6 @@ public class WsConnector
         writer.flush();
         writer.close();
 
-        Scanner s = new Scanner(con.getInputStream());
-        s.next();
-        s.close();
         return con;
     }
 

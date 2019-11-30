@@ -5,8 +5,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import br.alunos.nolascopad2.models.Capitulo;
+import br.alunos.nolascopad2.models.Livro;
 import br.alunos.nolascopad2.net.model.CapituloNet;
 import br.alunos.nolascopad2.net.model.LivroNet;
 import br.alunos.nolascopad2.models.Pagina;
@@ -24,6 +26,43 @@ public class JsonConverter
 
         return  jsonObject;
     }
+
+    public static JSONObject toJson (LivroNet livro) throws JSONException
+    {
+        JSONObject jsonLivro = new JSONObject();
+
+        jsonLivro.put("titulo", livro.titulo);
+        jsonLivro.put("user", livro.user);
+        jsonLivro.put("desc", livro.desc);
+        jsonLivro.put("lastedit", livro.lastedit);
+        jsonLivro.put("isprivate", livro.isprivate);
+        jsonLivro.put("titulo", livro.titulo);
+        jsonLivro.put("ncaps", livro.ncaps);
+        jsonLivro.put("npages", livro.npages);
+
+        JSONArray jsonCapitulos = new JSONArray();
+
+        for (CapituloNet c : livro.capitulos)
+            jsonCapitulos.put(toJson(c));
+
+        jsonLivro.put("capitulos", jsonCapitulos);
+
+        return jsonLivro;
+    }
+
+    public static JSONObject toJson (CapituloNet capitulo) throws JSONException
+    {
+        JSONObject json = new JSONObject();
+
+        json.put("titulo", capitulo.titulo);
+        json.put("desc", capitulo.desc);
+        json.put("pagina", capitulo.pagina);
+        json.put("npages", capitulo.npages);
+        json.put("lastedit", capitulo.lastedit);
+
+        return json;
+    }
+
 
     public static User userFromJson(JSONObject json) throws JSONException
     {

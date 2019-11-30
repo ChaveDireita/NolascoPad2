@@ -29,7 +29,7 @@ public class LoginScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_screen);
         SharedPreferences preferences = getSharedPreferences(LoginScreen.SAVED_USER, 0);
-        if (preferences.getInt("LoggedUserId", -1) >= 0) {
+        if (preferences.getString("LoggedUserEmail", null) != null) {
             Intent intent = new Intent(this, HomeScreen.class);
             startActivity(intent);
             finish();

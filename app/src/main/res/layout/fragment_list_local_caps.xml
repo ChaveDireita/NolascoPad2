@@ -49,6 +49,9 @@
             android:elevation="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:rippleColor="@color/fab_pressed"
+            app:fab_colorNormal="@color/fab_normal"
+            app:fab_colorPressed="@color/fab_pressed"
             app:srcCompat="@drawable/ic_add_black_24dp" />
 
         <TextView

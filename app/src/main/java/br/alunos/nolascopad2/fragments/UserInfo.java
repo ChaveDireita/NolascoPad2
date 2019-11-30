@@ -86,22 +86,19 @@ public class UserInfo extends Fragment {
         Button exitbtn = view.findViewById(R.id.exitbtn);
         Button editbtn= view.findViewById(R.id.edituserbtn);
         SharedPreferences preferences =  getActivity().getSharedPreferences(LoginScreen.SAVED_USER, 0);
-        final int currentuser = preferences.getInt("LoggedUserId",-1);
+        final int currentuser = userDAO.getUserIDFromDBbyEmail(preferences.getString("LoggedUserEmail",null));
         User loggeduser = userDAO.getUserFromDB(currentuser);
         usernamefield.setText(loggeduser.nome);
         useremailfield.setText(loggeduser.email);
         totalbooksfield.setText(livroDAO.getNLivrosperuser(currentuser));
         totalcapsfield.setText(livroDAO.getNCapsperuser(currentuser));
-        editbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intento = new Intent(getActivity(), GeneralEditActivity.class);
-                intento.putExtra("WhichOne",3);
-                intento.putExtra("UserId",currentuser);
-                getActivity().startActivity(intento);
+        editbtn.setOnClickListener(v -> {
+            Intent intento = new Intent(getActivity(), GeneralEditActivity.class);
+            intento.putExtra("WhichOne",3);
+            intento.putExtra("UserId",currentuser);
+            getActivity().startActivity(intento);
 
 
-            }
         });
 
         return view;
