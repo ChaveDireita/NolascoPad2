@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activities.ShowUserScreen"></activity>
         <activity android:name=".activities.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,9 +24,7 @@
         <activity android:name=".activities.GeneralEditActivity" />
         <activity android:name=".activities.CapsScreen" />
         <activity android:name=".activities.HomeScreen" />
-        <activity android:name=".activities.LoginScreen">
-
-        </activity>
+        <activity android:name=".activities.LoginScreen"></activity>
     </application>
 
 </manifest>

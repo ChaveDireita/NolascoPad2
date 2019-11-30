@@ -6,50 +6,45 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.ui.AppBarConfiguration;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
 import com.google.android.material.navigation.NavigationView;
 
 import br.alunos.nolascopad2.R;
-import br.alunos.nolascopad2.fragments.CreateBook;
 import br.alunos.nolascopad2.fragments.ListLocalBooks;
+import br.alunos.nolascopad2.fragments.UserInfo;
 
-public class HomeScreen extends AppCompatActivity {
-
+public class ShowUserScreen extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private DrawerLayout drawer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_screen);
-        Toolbar toolbar = findViewById(R.id.toolbar2);
-        ListLocalBooks fragment = new ListLocalBooks();
+        setContentView(R.layout.activity_show_user_screen);
+        UserInfo fragment = new UserInfo();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.listcreateframe,fragment);
+        transaction.replace(R.id.userdetailsframe,fragment);
         transaction.commit();
-        drawer = findViewById(R.id.homedrawer);
+        Toolbar toolbar = findViewById(R.id.usertoolbar);
+        drawer = findViewById(R.id.userdrawer);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 Intent intent;
                 switch (menuItem.getItemId()){
-                    case R.id.nav_allbooks:
-                        intent = new Intent(HomeScreen.this,ShowAllBooks.class);
+                    case R.id.nav_home:
+                        intent = new Intent(ShowUserScreen.this,HomeScreen.class);
                         startActivity(intent);
                         finish();
                         break;
-                    case R.id.nav_showuser:
-                        intent = new Intent(HomeScreen.this,ShowUserScreen.class);
+                    case R.id.nav_allbooks:
+                        intent = new Intent(ShowUserScreen.this,ShowAllBooks.class);
                         startActivity(intent);
                         finish();
                         break;

@@ -9,25 +9,17 @@
             android:icon="@drawable/ic_book_black_24dp"
             android:title="Meus livros" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_allbooks"
             android:icon="@drawable/ic_online_black_24dp"
             android:title="Livros online" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_folder_open_black_24dp"
-            android:title="Externos" />
     </group>
 
     <item android:title="Usuário">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/nav_showuser"
                 android:icon="@drawable/ic_person_black_24dp"
                 android:title="Ver perfil" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_settings_black_24dp"
-                android:title="Configurações" />
         </menu>
     </item>
 

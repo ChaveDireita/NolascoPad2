@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/homedrawer"
     android:background="@color/background"
-    tools:context=".activities.HomeScreen">
-
+    tools:context=".activities.HomeScreen"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
     <FrameLayout
         android:id="@+id/listcreateframe"
         android:layout_width="0dp"
@@ -47,4 +49,13 @@
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/navigation_layout"
+        app:menu="@menu/activity_drawer_drawer" />
+
+</androidx.drawerlayout.widget.DrawerLayout>
