@@ -114,6 +114,30 @@ public class LoginFragment extends Fragment {
             String email = strings[0];
             String senha = strings[1];
 
+            if (userDAO.searchUserByEmail(email))
+            {
+                User user = userDAO.getUserFromDB(userDAO.getUserIDFromDBbyEmail(email));
+                if (user.senha.equalsIgnoreCase(senha))
+                {
+                    SharedPreferences preferences =  getActivity().getSharedPreferences(LoginScreen.SAVED_USER, 0);
+                    SharedPreferences.Editor editor = preferences.edit();
+
+                    editor.putString("LoggedUserEmail", email);
+                    editor.apply();
+
+                    Intent intent = new Intent(getActivity(), HomeScreen.class);
+                    startActivity(intent);
+                    getActivity().finish();
+
+                    return null;
+                }
+
+                InformationDialogFragment.newInstance("Erro", "Email ou senha incorretos.", "Ok")
+                            .show(getFragmentManager(), "Info");
+
+                return null;
+            }
+
             if (!WsConnector.checkInternetConection())
             {
                 InformationDialogFragment.newInstance("Erro", "Não foi possível conectar-se ao servidor.", "Ok")

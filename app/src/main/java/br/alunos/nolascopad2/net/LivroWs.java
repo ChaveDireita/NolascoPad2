@@ -1,7 +1,5 @@
 package br.alunos.nolascopad2.net;
 
-import android.content.Context;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -11,7 +9,6 @@ import java.util.List;
 
 import static br.alunos.nolascopad2.net.WsConnector.*;
 
-import br.alunos.nolascopad2.models.Livro;
 import br.alunos.nolascopad2.net.model.LivroNet;
 
 public class LivroWs
@@ -21,7 +18,7 @@ public class LivroWs
         List<LivroNet> livros = new ArrayList<>();
         try
         {
-            String res = getResponseData(getFrom("/nolascopad/livro/" + user));
+            String res = getResponseData(get("/nolascopad/livro/" + user));
             JSONArray jsonArray = new JSONArray(res);
 
             for (int i = 0; i < jsonArray.length(); i++)

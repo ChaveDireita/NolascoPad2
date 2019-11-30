@@ -1,6 +1,7 @@
 package br.alunos.nolascopad2.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
@@ -19,6 +20,11 @@ public class HomeScreen extends AppCompatActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.listcreateframe,fragment);
         transaction.commit();
+    }
 
+    @Override
+    public void onBackPressed()
+    {
+        super.onBackPressed();
     }
 }

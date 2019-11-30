@@ -37,20 +37,9 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/addbookfab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="25dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="32dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/ic_add_black_24dp" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/cloudbookfab"
+        <com.getbase.floatingactionbutton.FloatingActionsMenu
+            android:id="@+id/menufab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
@@ -59,7 +48,24 @@
             android:layout_marginBottom="32dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/ic_add_black_24dp" />
+            app:srcCompat="@drawable/ic_add_black_24dp" >
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/cloudfab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_add_black_24dp"
+                app:fab_title="@string/fab_cloud"/>
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/addbookfab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fab_title="@string/fab_add"
+                app:srcCompat="@drawable/ic_add_black_24dp" />
+
+        </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
         <TextView
             android:id="@+id/nullmessage"
             android:layout_width="wrap_content"

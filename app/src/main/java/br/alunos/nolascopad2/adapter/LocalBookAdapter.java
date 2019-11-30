@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import br.alunos.nolascopad2.R;
 import br.alunos.nolascopad2.activities.CapsScreen;
@@ -24,7 +25,7 @@ import br.alunos.nolascopad2.models.Livro;
 import br.alunos.nolascopad2.database.LivroDAO;
 
 public class LocalBookAdapter extends RecyclerView.Adapter<LocalBookAdapter.PostViewHolder> {
-    private ArrayList<Livro> livros;
+    public List<Livro> livros;
     private ArrayList<Boolean> likeds;
     private Dialog dialog;
     private int currentUserId;
@@ -39,7 +40,7 @@ public class LocalBookAdapter extends RecyclerView.Adapter<LocalBookAdapter.Post
         return new PostViewHolder(postitem);
     }
 
-    public LocalBookAdapter(ArrayList<Livro> livros, int currentUserId) {
+    public LocalBookAdapter(List<Livro> livros, int currentUserId) {
         this.livros = livros;
         this.currentUserId = currentUserId;
         Log.w("Teste","Adapter definido");

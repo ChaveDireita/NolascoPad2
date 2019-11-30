@@ -23,7 +23,7 @@ public class UserWs
     {
         try
         {
-            return getResponseData(WsConnector.postTo("/nolascopad/user", JsonConverter.toJson(user)));
+            return getResponseData(WsConnector.post("/nolascopad/user", JsonConverter.toJson(user)));
         } catch (JSONException | IOException e)
         {
             e.printStackTrace();
@@ -36,7 +36,7 @@ public class UserWs
         List<User> users = new ArrayList<>();
         try
         {
-            String s = getResponseData(getFrom("/nolascopad/user"));
+            String s = getResponseData(WsConnector.get("/nolascopad/user"));
             Log.d("net", s);
             JSONArray array = new JSONArray(s);
 
@@ -52,15 +52,15 @@ public class UserWs
         return users;
     }
 
-    public static User get (String user)
+    public static User get (String email)
     {
         User u = null;
         try
         {
-            u = JsonConverter.userFromJson(new JSONObject
-                    (
-                            getResponseData(getFrom("nolascopad/user/email"))
-                    ));
+            String res = getResponseData(WsConnector.get("/nolascopad/user/" + email));
+            Log.d("net", "res: " + res);
+
+            u = JsonConverter.userFromJson(new JSONObject(res));
         } catch (IOException | JSONException e)
         {
             e.printStackTrace();
@@ -73,11 +73,14 @@ public class UserWs
     {
         try
         {
-            getResponseData(getFrom("/nolascopad/auth"));
+            return getResponseData
+                    (
+                            WsConnector.get("/nolascopad/auth/" + email + "-" + senha)
+                    ).equalsIgnoreCase("Accepted");
+
         } catch (IOException ignored)
         {
             return false;
         }
-        return true;
     }
 }

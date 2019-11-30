@@ -17,7 +17,7 @@ import java.util.Scanner;
 
 public class WsConnector
 {
-    public static final String BASE_SERVER = "http://192.168.1.69:55555";
+    public static final String BASE_SERVER = "https://nolascopad-api.herokuapp.com";
 
     public static HttpURLConnection connectTo (@NonNull String route) throws IOException
     {
@@ -31,25 +31,12 @@ public class WsConnector
         return con;
     }
 
-    public static HttpURLConnection getFrom (@NonNull String route) throws IOException
+    public static HttpURLConnection get(@NonNull String route) throws IOException
     {
         HttpURLConnection con = connectTo(route);
         con.setRequestMethod("GET");
         con.connect();
         Log.d("net", con.getRequestMethod());
-        return con;
-    }
-
-    public static HttpURLConnection getFrom (@NonNull String route, JSONObject data) throws IOException
-    {
-        HttpURLConnection con = connectTo(route);
-        con.setRequestMethod("GET");
-        con.setDoOutput(true);
-        con.connect();
-        DataOutputStream writer = new DataOutputStream(con.getOutputStream());
-        writer.writeBytes(data.toString());
-        writer.flush();
-        writer.close();
         return con;
     }
 
@@ -69,7 +56,7 @@ public class WsConnector
         return new String(out.toByteArray(), "UTF-8");
     }
 
-    public static HttpURLConnection postTo (String route, JSONObject data) throws IOException
+    public static HttpURLConnection post (String route, JSONObject data) throws IOException
     {
         HttpURLConnection con = connectTo(route);
         con.setRequestMethod("POST");
@@ -77,7 +64,22 @@ public class WsConnector
         con.connect();
 
         DataOutputStream writer = new DataOutputStream(con.getOutputStream());
-        Log.d("post", "postTo: " + data);
+        writer.writeBytes(data.toString());
+        writer.flush();
+        writer.close();
+
+        return con;
+    }
+
+
+    public static HttpURLConnection put (String route, JSONObject data) throws IOException
+    {
+        HttpURLConnection con = connectTo(route);
+        con.setRequestMethod("PUT");
+        con.setDoOutput(true);
+        con.connect();
+
+        DataOutputStream writer = new DataOutputStream(con.getOutputStream());
         writer.writeBytes(data.toString());
         writer.flush();
         writer.close();
@@ -88,22 +90,14 @@ public class WsConnector
         return con;
     }
 
-    public static HttpURLConnection deleteFrom (@NonNull String route) throws IOException
+    public static boolean checkInternetConection()
     {
-        HttpURLConnection con = connectTo(route);
-        con.setRequestMethod("DELETE");
-        con.connect();
-
-        return con;
-    }
-
-    public static boolean checkInternetConection() {
         try {
-            InetAddress ipAddr = InetAddress.getByName(BASE_SERVER);
-
-            return !ipAddr.equals("");
+            ((HttpURLConnection) new URL(BASE_SERVER).openConnection()).disconnect();
+            return true;
 
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }

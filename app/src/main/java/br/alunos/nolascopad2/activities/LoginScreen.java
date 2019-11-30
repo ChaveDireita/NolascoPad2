@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.widget.FrameLayout;
 
 import java.util.List;
 
@@ -28,8 +29,6 @@ public class LoginScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_screen);
         SharedPreferences preferences = getSharedPreferences(LoginScreen.SAVED_USER, 0);
-
-
         if (preferences.getInt("LoggedUserId", -1) >= 0) {
             Intent intent = new Intent(this, HomeScreen.class);
             startActivity(intent);
@@ -38,7 +37,7 @@ public class LoginScreen extends AppCompatActivity {
         LoginFragment fragment = new LoginFragment();
         FragmentTransaction transaction = getSupportFragmentManager()
                 .beginTransaction();
-        transaction.add(R.id.framelog, fragment);
+        transaction.replace(R.id.framelog, fragment);
         transaction.commit();
     }
 }

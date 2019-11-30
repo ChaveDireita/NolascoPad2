@@ -98,13 +98,6 @@ public class CadastroFragment extends Fragment {
                 return;
             }
 
-            if(userDAO.searchUserByEmail(user.email))
-            {
-                InformationDialogFragment.newInstance("Erro", "Usuário já cadastrado", "Ok")
-                                         .show(getFragmentManager(), "Info");
-                return;
-            }
-
             if(!user.senha.equals(confirmasenha)){
                 InformationDialogFragment.newInstance("Erro", "Senhas não batem", "Ok")
                                          .show(getFragmentManager(), "Info");
@@ -112,12 +105,6 @@ public class CadastroFragment extends Fragment {
             }
 
             new CadastroTask().execute(user);
-//                try {
-//
-//                }catch (Exception e){
-//                    e.printStackTrace();
-//                    Toast.makeText(getActivity().getApplicationContext(),"Não foi possivel efetuar o cadastro, veja o que deu errado aí, mas também pode ter sido erro nosso, então desculpa se for :)",Toast.LENGTH_LONG).show();
-//                }
         });
         return view;
     }
@@ -148,40 +135,52 @@ public class CadastroFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    public class CadastroTask extends AsyncTask<User, Void, Void>
+    public class CadastroTask extends AsyncTask<User, Void, Boolean>
     {
+        User user;
+
         @Override
-        protected Void doInBackground(User... users)
+        protected Boolean doInBackground(User... users)
         {
-            User user = users[0];
+            user = users[0];
 
             if (!WsConnector.checkInternetConection())
             {
                 InformationDialogFragment.newInstance("Erro", "Não foi possível conectar-se ao servidor.", "Ok")
                         .show(getFragmentManager(), "Info");
-                return null;
+                return false;
             }
             String res = UserWs.post(user);
-            if (!res.equalsIgnoreCase("created"))
+            Log.d("net", res);
+            if (!res.equalsIgnoreCase("Created"))
             {
                 InformationDialogFragment.newInstance("Erro", "Esse email já está cadastrado", "Ok")
                         .show(getFragmentManager(), "Info");
-                return null;
+                return false;
             }
 
+//            Intent intent = new Intent(getActivity(), HomeScreen.class);
+//            startActivity(intent);
+//            getActivity().finish();
 
-            userDAO.saveUser(user);
-            SharedPreferences preferences =  getActivity().getSharedPreferences(LoginScreen.SAVED_USER, 0);
-            SharedPreferences.Editor editor = preferences.edit();
+            return true;
+        }
 
-            editor.putString("LoggedUserEmail", user.email);
-            editor.apply();
-            Intent intent = new Intent(getActivity(), HomeScreen.class);
-            startActivity(intent);
-            getActivity().finish();
-
-            return null;
+        @Override
+        protected void onPostExecute(Boolean b)
+        {
+            if (b)
+            {
+                LoginFragment fragment = new LoginFragment();
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager()
+                                                               .beginTransaction();
+                transaction.replace(R.id.framelog,fragment);
+                transaction.commit();
+            }
+            super.onPostExecute(b);
         }
     }
+
+
 
 }
