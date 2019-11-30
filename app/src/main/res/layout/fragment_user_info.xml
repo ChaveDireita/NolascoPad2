@@ -42,7 +42,8 @@
                 android:id="@+id/emailtextedit"
                 android:hint="joaosousa@example.com"
                 android:padding="10dp"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textColor="@color/colorAccent"/>
 
             <TextView
                 android:text="Livros:"
@@ -53,6 +54,7 @@
                 tools:layout_editor_absoluteX="10dp"
                 tools:layout_editor_absoluteY="374dp"
                 android:text="12 livros criados"
+                android:textColor="@color/colorAccent"
                 android:padding="10dp"
                 android:textSize="18sp" />
 
@@ -66,7 +68,8 @@
                     android:id="@+id/totalcaps"
                     android:text="20 capítulos criados"
                     android:padding="10dp"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:textColor="@color/colorAccent"/>
 
             </TableLayout>
 

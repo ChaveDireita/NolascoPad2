@@ -11,23 +11,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="100dp"
+        android:layout_marginBottom="30dp"
         android:background="@drawable/nolascopadblackresized" />
-
-    <TextView
-        android:id="@+id/drawernamefield"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="João Silva"
-        android:textColor="@color/branco"
-        android:textSize="30sp" />
-
-    <TextView
-        android:id="@+id/draweremailfield"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="joaosilva@hotmail.com"
-        android:textColor="@color/branco"
-        android:textSize="18sp"
-        android:textStyle="italic" />
 
 </LinearLayout>

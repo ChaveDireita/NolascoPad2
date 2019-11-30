@@ -1,26 +1,20 @@
 package br.alunos.nolascopad2.fragments;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import br.alunos.nolascopad2.R;
-import br.alunos.nolascopad2.activities.HomeScreen;
-import br.alunos.nolascopad2.activities.LoginScreen;
 import br.alunos.nolascopad2.models.User;
 import br.alunos.nolascopad2.database.UserDAO;
 import br.alunos.nolascopad2.net.UserWs;
@@ -62,7 +56,7 @@ public class CadastroFragment extends Fragment {
         senhatext = view.findViewById(R.id.senhatextedit);
         confirmatext = view.findViewById(R.id.confirmatext);
         cadbtn = view.findViewById(R.id.cadbtn);
-        lognewbtn = view.findViewById(R.id.newlogbtn);
+        lognewbtn = view.findViewById(R.id.saveedituser);
 
         lognewbtn.setOnClickListener(v -> {
             LoginFragment fragment = new LoginFragment();

@@ -92,7 +92,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/tableLayout2" />
 
             <Button
-                android:id="@+id/newlogbtn"
+                android:id="@+id/saveedituser"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/borderblackbutton"
                 android:text="Já possui cadastro? Clique pra entrar"

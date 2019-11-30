@@ -54,6 +54,7 @@ public class ShowUserScreen extends AppCompatActivity {
         });
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawer,toolbar,R.string.navigation_bar_open,R.string.navigation_bar_close);
+        toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.branco));
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         // Passing each menu ID as a set of Ids because each

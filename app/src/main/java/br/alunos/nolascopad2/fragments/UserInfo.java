@@ -17,6 +17,7 @@ import android.widget.TextView;
 import br.alunos.nolascopad2.R;
 import br.alunos.nolascopad2.activities.GeneralEditActivity;
 import br.alunos.nolascopad2.activities.LoginScreen;
+import br.alunos.nolascopad2.activities.SplashScreen;
 import br.alunos.nolascopad2.database.LivroDAO;
 import br.alunos.nolascopad2.models.User;
 import br.alunos.nolascopad2.database.UserDAO;
@@ -90,15 +91,24 @@ public class UserInfo extends Fragment {
         User loggeduser = userDAO.getUserFromDB(currentuser);
         usernamefield.setText(loggeduser.nome);
         useremailfield.setText(loggeduser.email);
-        totalbooksfield.setText(livroDAO.getNLivrosperuser(currentuser));
-        totalcapsfield.setText(livroDAO.getNCapsperuser(currentuser));
+        totalbooksfield.setText(livroDAO.getNLivrosperuser(loggeduser.id)+" Livros criados até o momento");
+        totalcapsfield.setText(""+livroDAO.getNCapsperuser(loggeduser.id)+" Capítulos criados até o momento");
         editbtn.setOnClickListener(v -> {
             Intent intento = new Intent(getActivity(), GeneralEditActivity.class);
             intento.putExtra("WhichOne",3);
             intento.putExtra("UserId",currentuser);
             getActivity().startActivity(intento);
-
-
+        });
+        exitbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intento = new Intent(getActivity(), SplashScreen.class);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("LoggedUserEmail", null);
+                editor.apply();
+                getActivity().startActivity(intento);
+                getActivity().finish();
+            }
         });
 
         return view;
@@ -114,12 +124,12 @@ public class UserInfo extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
+        /*if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
-        }
+        }*/
     }
 
     @Override

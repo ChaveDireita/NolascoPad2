@@ -12,6 +12,15 @@
         android:layout_height="match_parent"
         tools:context=".Activity.LoginScreen">
 
+        <ImageView
+            android:id="@+id/editbackuserbtn"
+            android:layout_width="35dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/ic_arrow_back_black_24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tableLayout2" />
         <TableLayout
             android:id="@+id/tableLayout2"
             android:layout_width="match_parent"
@@ -58,7 +67,7 @@
 
 
             <Button
-                android:id="@+id/newlogbtn"
+                android:id="@+id/saveedituser"
                 android:layout_marginTop="20dp"
                 android:background="@color/colorAccent"
                 android:drawableLeft="@drawable/ic_edit_24dp"

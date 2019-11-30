@@ -84,7 +84,7 @@ public class UserEdit extends Fragment {
         emailtext.setText(user.email);
         nometext = view.findViewById(R.id.nometextedit);
         nometext.setText(user.nome);
-        backbtn = view.findViewById(R.id.editbackbookbtn);
+        backbtn = view.findViewById(R.id.editbackuserbtn);
 
         backbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,7 +92,7 @@ public class UserEdit extends Fragment {
                 getActivity().finish();
             }
         });
-        edituser = view.findViewById(R.id.editposbtn);
+        edituser = view.findViewById(R.id.saveedituser);
         edituser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,12 +135,12 @@ public class UserEdit extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
+        /*if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
-        }
+        }*/
     }
 
     @Override
