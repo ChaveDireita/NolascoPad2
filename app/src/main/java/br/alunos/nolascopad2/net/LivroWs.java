@@ -30,6 +30,23 @@ public class LivroWs
         return livros;
     }
 
+    public static List<LivroNet> getLivrosNotUser (String user)
+    {
+        List<LivroNet> livros = new ArrayList<>();
+        try
+        {
+            String res = getResponseData(get("/nolascopad/livro-not/" + user));
+            JSONArray jsonArray = new JSONArray(res);
+
+            for (int i = 0; i < jsonArray.length(); i++)
+                livros.add(JsonConverter.livroFromJson(jsonArray.getJSONObject(i)));
+        }catch (IOException | JSONException e)
+        {
+            e.printStackTrace();
+        }
+        return livros;
+    }
+
     public static String putLivros (String user, List<LivroNet> livroNets)
     {
         try

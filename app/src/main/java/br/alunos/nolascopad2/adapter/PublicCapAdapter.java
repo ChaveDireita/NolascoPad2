@@ -17,19 +17,27 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import br.alunos.nolascopad2.R;
 import br.alunos.nolascopad2.fragments.PublicPageShow;
-import br.alunos.nolascopad2.models.Capitulo;
 import br.alunos.nolascopad2.database.LivroDAO;
+import br.alunos.nolascopad2.net.model.CapituloNet;
+import br.alunos.nolascopad2.net.model.LivroNet;
 
 public class PublicCapAdapter extends RecyclerView.Adapter<PublicCapAdapter.PostViewHolder> {
-    private ArrayList<Capitulo> capitulos;
+    private List<CapituloNet> capitulos;
     private ArrayList<Boolean> likeds;
     private Dialog dialog;
-    private int currentBookId;
-    private LivroDAO livroDAO;
+    private LivroNet currentBook;
     private Context parentcontext;
+
+    public PublicCapAdapter(List<CapituloNet> capitulos, LivroNet currentBook) {
+        this.capitulos = capitulos;
+        this.currentBook = currentBook;
+        Log.w("Teste","Adapter definido");
+    }
+
     @NonNull
     @Override
     public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -38,54 +46,35 @@ public class PublicCapAdapter extends RecyclerView.Adapter<PublicCapAdapter.Post
         return new PostViewHolder(postitem);
     }
 
-    public PublicCapAdapter(ArrayList<Capitulo> capitulos, int currentBookId) {
-        this.capitulos = capitulos;
-        this.currentBookId = currentBookId;
-        Log.w("Teste","Adapter definido");
-    }
-
     @Override
     public void onBindViewHolder(@NonNull final PostViewHolder holder, final int position) {
         Log.w("Teste","chegou no viewholder binder " +position);
-        final Capitulo capitulo = capitulos.get(position);
+        final CapituloNet capitulo = capitulos.get(position);
         holder.capnametext.setText(capitulo.titulo);
         holder.descriptiontext.setText(capitulo.desc);
         holder.datetimetext.setText("Última vez modificado: " + capitulo.lastedit);
-        holder.entirecaptext.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                dialog = new Dialog(parentcontext);
-                dialog.setContentView(R.layout.publiccappopup);
-                livroDAO = new LivroDAO(parentcontext);
-                TextView itemnome = dialog.findViewById(R.id.pbcaplistnamepop);
-                TextView itemdate = dialog.findViewById(R.id.pbcaplistdatetimepop);
-                TextView itemdesc = dialog.findViewById(R.id.pbcaplistdescriptionpop);
-                ImageView closebtn = dialog.findViewById(R.id.pbcapclosepop);
-                itemnome.setText(capitulos.get(position).titulo);
-                itemdate.setText(capitulos.get(position).lastedit);
-                itemdesc.setText(capitulos.get(position).desc);
-                closebtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-                dialog.show();
-                return true;
-            }
+        holder.entirecaptext.setOnLongClickListener(v -> {
+            dialog = new Dialog(parentcontext);
+            dialog.setContentView(R.layout.publiccappopup);
+            TextView itemnome = dialog.findViewById(R.id.pbcaplistnamepop);
+            TextView itemdate = dialog.findViewById(R.id.pbcaplistdatetimepop);
+            TextView itemdesc = dialog.findViewById(R.id.pbcaplistdescriptionpop);
+            ImageView closebtn = dialog.findViewById(R.id.pbcapclosepop);
+            itemnome.setText(capitulos.get(position).titulo);
+            itemdate.setText(capitulos.get(position).lastedit);
+            itemdesc.setText(capitulos.get(position).desc);
+            closebtn.setOnClickListener(v1 -> dialog.dismiss());
+            dialog.show();
+            return true;
         });
-        holder.entirecaptext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                PublicPageShow fragment = new PublicPageShow();
-                Bundle bundle = new Bundle();
-                bundle.putInt("CapId",capitulo.id);
-                fragment.setArguments(bundle);
-                FragmentTransaction transaction = ((AppCompatActivity)parentcontext).getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.listpublicframe,fragment);
-                transaction.commit();
-            }
+        holder.entirecaptext.setOnClickListener(v -> {
+            PublicPageShow fragment = new PublicPageShow();
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("Cap",capitulo);
+            fragment.setArguments(bundle);
+            FragmentTransaction transaction = ((AppCompatActivity)parentcontext).getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.listpublicframe,fragment);
+            transaction.commit();
         });
     }
 
@@ -102,10 +91,10 @@ public class PublicCapAdapter extends RecyclerView.Adapter<PublicCapAdapter.Post
         public PostViewHolder(@NonNull final View itemView) {
             super(itemView);
             Log.w("Teste","chegou no viewholder");
-            capnametext = (TextView) itemView.findViewById(R.id.caplistname);
-            datetimetext = (TextView) itemView.findViewById(R.id.caplistdatetime);
-            descriptiontext = (TextView) itemView.findViewById(R.id.caplistdesc);
-            entirecaptext = (LinearLayout) itemView.findViewById(R.id.entirecap);
+            capnametext = itemView.findViewById(R.id.caplistname);
+            datetimetext = itemView.findViewById(R.id.caplistdatetime);
+            descriptiontext = itemView.findViewById(R.id.caplistdesc);
+            entirecaptext = itemView.findViewById(R.id.entirecap);
         }
     }
 }

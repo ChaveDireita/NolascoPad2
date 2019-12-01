@@ -85,6 +85,7 @@ public class JsonConverter
         livro.lastedit = json.getString("lastedit");
         livro.ncaps = json.getInt("ncaps");
         livro.isprivate = json.getBoolean("isprivate");
+        livro.user = json.getString("user");
         livro.capitulos = new ArrayList<>();
 
         JSONArray jsonCapitulos = json.getJSONArray("capitulos");

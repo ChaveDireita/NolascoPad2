@@ -38,8 +38,7 @@ public class ConnectionFactory extends SQLiteOpenHelper {
                             "    isprivate bool,\n" +
                             "    datamodificacao varchar(10),\n" +
                             "    ncaps int,\n" +
-                            "    npages int,\n" +
-                            "    foreign key (userid) references "+TABELA_USER+"(id));");
+                            "    npages int);");
             db.execSQL(
                     "create table if not exists "+TABELA_CAPITULO+"(\n" +
                             "\tid integer primary key autoincrement,\n" +
