@@ -104,6 +104,10 @@ public class ListPublicBooks extends Fragment {
         {
             super.onPostExecute(livroNets);
 
+            for (LivroNet livroNet : livroNets)
+                if (livroNet.isprivate)
+                    livroNets.remove(livroNet);
+
             RecyclerView livroRecyclerView = getActivity().findViewById(R.id.pblivrosRecyclerView);
             //Layout
             RecyclerView.LayoutManager postlayout = new LinearLayoutManager(getActivity());

@@ -74,16 +74,6 @@
             </TableLayout>
 
             <Button
-                android:id="@+id/edituserbtn"
-                android:layout_marginTop="20dp"
-                android:background="@color/colorAccent"
-                android:drawableLeft="@drawable/ic_edit_black_24dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="30dp"
-                android:text="editar informações"
-                android:textColor="@color/branco"
-                android:textSize="18sp" />
-            <Button
                 android:id="@+id/exitbtn"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/borderblackbutton"

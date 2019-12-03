@@ -53,7 +53,6 @@ public class UserInfo extends Fragment {
         TextView totalbooksfield = view.findViewById(R.id.totalbooks);
         TextView totalcapsfield = view.findViewById(R.id.totalcaps);
         Button exitbtn = view.findViewById(R.id.exitbtn);
-        Button editbtn= view.findViewById(R.id.edituserbtn);
         SharedPreferences preferences =  getActivity().getSharedPreferences(LoginScreen.SAVED_USER, 0);
         final int currentuser = userDAO.getUserIDFromDBbyEmail(preferences.getString("LoggedUserEmail",null));
         User loggeduser = userDAO.getUserFromDB(currentuser);
@@ -61,12 +60,6 @@ public class UserInfo extends Fragment {
         useremailfield.setText(loggeduser.email);
         totalbooksfield.setText(livroDAO.getNLivrosperuser(loggeduser.id)+" Livros criados até o momento");
         totalcapsfield.setText(""+livroDAO.getNCapsperuser(loggeduser.id)+" Capítulos criados até o momento");
-        editbtn.setOnClickListener(v -> {
-            Intent intento = new Intent(getActivity(), GeneralEditActivity.class);
-            intento.putExtra("WhichOne",3);
-            intento.putExtra("UserId",currentuser);
-            getActivity().startActivity(intento);
-        });
         exitbtn.setOnClickListener(v -> {
             Intent intento = new Intent(getActivity(), SplashScreen.class);
             SharedPreferences.Editor editor = preferences.edit();
